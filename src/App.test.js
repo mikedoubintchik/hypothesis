@@ -1,9 +1,12 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
 import App from './App';
+import {mount} from 'enzyme';
+import Widget from './components/widget'
 
-it('renders without crashing', () => {
-  const div = document.createElement('div');
-  ReactDOM.render(<App />, div);
-  ReactDOM.unmountComponentAtNode(div);
+describe('when App component renders', () => {
+    const wrapper = mount(<App/>);
+
+    it('Widget component renders successfully', () => {
+        expect(wrapper.find(Widget).length).toEqual(1);
+    });
 });
