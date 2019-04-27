@@ -5,7 +5,8 @@ body {
 textarea {
   border: 1px solid #999;
   padding: 0.5rem;
-  width: 600px;
+  width: calc(100% - 1rem);
+  max-width: 600px;
   height: 100px;
 }
 
@@ -25,7 +26,7 @@ textarea {
   max-height: 50px;
   overflow-y: auto;
   padding-left: 0;
-  width: 100px;
+  width: 150px;
   background: white;
 
   li {
