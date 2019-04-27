@@ -32,9 +32,9 @@ class Widget extends Component {
     onChange = e => {
         const {suggestions} = this.props;
         const userInput = e.currentTarget.value;
-        const autoSuggestInput = (userInput.indexOf(' @') > -1) ? userInput.slice(userInput.indexOf(' @') + 2) : '';
+        const autoSuggestInput = (userInput.indexOf(' @') > -1) || (userInput.indexOf('@') === 0) ? userInput.slice(userInput.indexOf(' @') + 2) : '';
         const showSuggestions = (autoSuggestInput !== '');
-
+        
         // Filter our suggestions that don't contain the user's input
         const filteredSuggestions = suggestions.filter(
             suggestion => suggestion.toLowerCase().indexOf(autoSuggestInput.toLowerCase()) > -1
@@ -64,6 +64,7 @@ class Widget extends Component {
     // Event fired when the user presses a key down
     onKeyDown = e => {
         const {activeSuggestion, filteredSuggestions} = this.state;
+        const suggestionsContainer = document.querySelector('.suggestions');
 
         // User pressed the enter key, update the input and close the
         // suggestions
@@ -84,6 +85,9 @@ class Widget extends Component {
             }
 
             this.setState({activeSuggestion: activeSuggestion - 1});
+
+            // scroll suggestions container up
+            suggestionsContainer.scrollTop = suggestionsContainer.scrollTop -= 20;
         }
         // User pressed the down arrow, increment the index
         else if (e.keyCode === 40 && this.state.showSuggestions) {
@@ -92,6 +96,9 @@ class Widget extends Component {
             }
 
             this.setState({activeSuggestion: activeSuggestion + 1});
+
+            // scroll suggestions container down
+            suggestionsContainer.scrollTop = suggestionsContainer.scrollTop += 20;
         }
     };
 
