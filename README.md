@@ -1,5 +1,14 @@
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
+## How To Use
+Start typing into the comment box, to initiate an autocomplete type a space followed by the `@` symbol and you will see the autocomplete widget.
+
+## Initiation
+- Run `yarn` to initiate the project
+
+## Requirements
+- Node version: ^10.15
+
 ## Available Scripts
 
 In the project directory, you can run:
