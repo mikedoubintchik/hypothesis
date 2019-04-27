@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import './App.css';
 import Widget from './components/widget';
-import axios from 'axios';
+import getSuggestions from './services/userData'
 
 class App extends Component {
     constructor(props) {
@@ -9,32 +9,40 @@ class App extends Component {
 
         this.state = {
             suggestions: [],
-            isLoading: false
+            isLoading: false,
+            error: ''
         }
     }
 
-    componentDidMount() {
-        this.setState({isLoading: true});
+    async componentDidMount() {
+        this.setState({
+            isLoading: true
+        });
 
-        axios.get('UserData.json')
-            .then(response => {
-                let massagedSuggestions = [];
+        try {
+            const response = await getSuggestions();
 
-                response.data.forEach(person => {
-                    massagedSuggestions.push(`${person.name} (${person.username})`);
-                });
+            let massagedSuggestions = [];
 
-                this.setState({
-                    suggestions: massagedSuggestions,
-                    isLoading: false
-                });
-            })
-            .catch(error => console.log(error));
+            response.data.forEach(person => {
+                massagedSuggestions.push(`${person.name} (${person.username})`);
+            });
+
+            this.setState({
+                suggestions: massagedSuggestions,
+                isLoading: false
+            });
+        } catch (error) {
+            this.setState({
+                isLoading: false,
+                error: error
+            });
+        }
     }
 
     render() {
         const {suggestions, isLoading} = this.state;
-        
+
         return (
             <div className="App">
                 <h1>Comments</h1>
